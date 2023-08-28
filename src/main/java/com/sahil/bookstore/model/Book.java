@@ -6,16 +6,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Book {
     private String id;
     private int copiesAvailable;
-    private String authorId;
+    private Author author;
     private String genre;
 
     public Book() {
     }
 
-    public Book(String id, int copiesAvailable, String authorId, String genre) {
+    public Book(String id, int copiesAvailable, Author author, String genre) {
         this.id = id;
         this.copiesAvailable = copiesAvailable;
-        this.authorId = authorId;
+        this.author = author;
         this.genre = genre;
     }
 
@@ -35,12 +35,12 @@ public class Book {
         this.copiesAvailable = copiesAvailable;
     }
 
-    public String getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getGenre() {
@@ -56,7 +56,7 @@ public class Book {
         return "Book{" +
                 "id='" + id + '\'' +
                 ", copiesAvailable=" + copiesAvailable +
-                ", authorId='" + authorId + '\'' +
+                ", authorId='" + author + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
     }

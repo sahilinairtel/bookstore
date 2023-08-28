@@ -1,13 +1,11 @@
 package com.sahil.bookstore.controller;
 
 import com.sahil.bookstore.model.Author;
+import com.sahil.bookstore.model.Book;
 import com.sahil.bookstore.repository.AuthorRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +28,10 @@ public class AuthorController {
             return new Author();
         }
         return authorRepository.save(author);
+    }
+
+    @GetMapping("/author/{query}")
+    public List<Author> getBooksWithGenre(@PathVariable String query){
+        return authorRepository.findByNameRegex(query);
     }
 }
