@@ -1,11 +1,19 @@
 package com.sahil.bookstore.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Document(collection = "author")
 public class Author {
+    @Id
     private String id;
+
+    @NotBlank(message = "Name is required")
     private String name;
+    @NotNull(message = "Address is required")
     private Address address;
 
     public Author() {

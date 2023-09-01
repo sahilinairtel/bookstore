@@ -9,6 +9,6 @@ import java.util.List;
 public interface BookRepository extends MongoRepository<Book,String> {
     List<Book> findByGenre(String genre);
     List<Book> findByGenreAndCopiesAvailableGreaterThan(String genre, int copiesAvailable);
-    @Query("{ 'author.name': { $regex: ?0 } }")
-    List<Book> findBooksByAuthorName(String name);
+
+    List<Book> findBooksByAuthorId(String authorId);
 }

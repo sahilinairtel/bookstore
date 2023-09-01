@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface AuthorRepository extends MongoRepository<Author,String> {
-    @Query("{ 'name': { $regex: ?0 } }")
+    @Query("{ 'name': { $regex: ?0, '$options' : 'i' } }")
     List<Author> findByNameRegex(String regexPattern);
+
+    List<Author> findByName(String name);
 }

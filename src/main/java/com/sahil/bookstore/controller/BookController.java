@@ -2,7 +2,9 @@ package com.sahil.bookstore.controller;
 
 import com.sahil.bookstore.model.Book;
 import com.sahil.bookstore.repository.BookRepository;
+import com.sahil.bookstore.service.BookService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,35 +15,31 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @GetMapping("/book")
     public List<Book> checkHealth(){
-        return bookRepository.findAll();
+        return bookService.getAllBooks();
     }
 
     @PostMapping("/book")
-    public Book createBook(@RequestBody Book book, HttpServletResponse response) throws IOException {
-        if(book.getCopiesAvailable()==0 || book.getGenre()==null || book.getAuthor()==null){
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return new Book();
-        }
-        return bookRepository.save(book);
+    public Book createBook(@Valid @RequestBody Book book) {
+        return bookService.createBook(book);
     }
 
-    @GetMapping("/book/{query}")
-    public List<Book> getBooksWithGenre(@PathVariable String query){
-        return bookRepository.findByGenre(query);
+    @GetMapping("/book/genre/{query}")
+    public List<Book> getBooksByGenre(@PathVariable String query){
+        return bookService.getBooksByGenre(query);
     }
 
     @GetMapping("/book/genre-copies")
     public List<Book> getBooksWithGenreAndCopiesMoreThan(@RequestParam(name="genre") String genre, @RequestParam(name="copiesAvailable") int copiesAvailable){
-        return bookRepository.findByGenreAndCopiesAvailableGreaterThan(genre,copiesAvailable);
+        return bookService.getBooksWithGenreAndCopiesMoreThan(genre,copiesAvailable);
     }
 
     @GetMapping("/book/author")
     public List<Book> getBookByAuthorName(@RequestParam(name="authorName") String authorName){
-        return bookRepository.findBooksByAuthorName(authorName);
+        return bookService.getBookByAuthorName(authorName);
     }
 
 }

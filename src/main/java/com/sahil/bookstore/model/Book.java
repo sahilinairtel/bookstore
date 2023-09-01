@@ -1,21 +1,31 @@
 package com.sahil.bookstore.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "book")
 public class Book {
+    @Id
     private String id;
+
+    @Positive(message = "copies available can not be negative")
     private int copiesAvailable;
-    private Author author;
+
+    @NotBlank(message = "Author id can't be blank")
+    private String authorId;
+
+    @NotBlank(message = "genre can't be blank")
     private String genre;
 
     public Book() {
     }
 
-    public Book(String id, int copiesAvailable, Author author, String genre) {
+    public Book(String id, int copiesAvailable, String authorId, String genre) {
         this.id = id;
         this.copiesAvailable = copiesAvailable;
-        this.author = author;
+        this.authorId = authorId;
         this.genre = genre;
     }
 
@@ -35,12 +45,12 @@ public class Book {
         this.copiesAvailable = copiesAvailable;
     }
 
-    public Author getAuthor() {
-        return author;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthor(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getGenre() {
@@ -56,7 +66,7 @@ public class Book {
         return "Book{" +
                 "id='" + id + '\'' +
                 ", copiesAvailable=" + copiesAvailable +
-                ", authorId='" + author + '\'' +
+                ", authorId='" + authorId + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
     }
